@@ -4,17 +4,25 @@ import Guitar from "./components/Guitar";
 import { db } from "./data/db";
 
 function App() {
-  const [data] = useState(db);
+  const [data, setData] = useState(db);
   const [cart, setCart] = useState([]);
 
   function addToCart(item) {
-    setCart(prevCart => [...prevCart, item])
-    
+    const itemExists = cart.findIndex(guitar=> guitar.id === item.id);
+
+    if(itemExists >= 0) {
+      const updateCart = [...cart];
+      updateCart[itemExists].quantity++;
+      setCart(updateCart);
+    } else {
+      item.quantity = 1;
+      setCart([...cart, item]);
+    } 
   }
 
   return (
     <>
-      <Header />
+      <Header cartProps={cart}/>
 
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
