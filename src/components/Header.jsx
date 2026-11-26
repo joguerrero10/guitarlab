@@ -1,8 +1,19 @@
-export default function Header({ cartProps }) {
+import { useMemo } from "react";
+
+export default function Header({
+  cartProps,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  clearCart
+}) {
   //state derivado
-  const isEmpty = () => cartProps.length === 0;
-  const cartTotal = () =>
-    cartProps.reduce((total, item) => total + (item.quantity * item.price), 0);
+  const isEmpty = useMemo(() => cartProps.length === 0, [cartProps]);
+  const cartTotal = useMemo(
+    () =>
+      cartProps.reduce((total, item) => total + item.quantity * item.price, 0),
+    [cartProps],
+  );
 
   return (
     <>
@@ -27,7 +38,7 @@ export default function Header({ cartProps }) {
                 />
 
                 <div id="carrito" className="bg-white p-3">
-                  {isEmpty() ? (
+                  {isEmpty ? (
                     <p className="text-center">El carrito esta vacio</p>
                   ) : (
                     <>
@@ -54,16 +65,25 @@ export default function Header({ cartProps }) {
                               <td>{guitar.name}</td>
                               <td className="fw-bold">${guitar.price}</td>
                               <td className="flex align-items-start gap-4">
-                                <button type="button" className="btn btn-dark">
+                                <button
+                                  onClick={() => decreaseQuantity(guitar.id)}
+                                  type="button"
+                                  className="btn btn-dark"
+                                >
                                   -
                                 </button>
                                 {guitar.quantity}
-                                <button type="button" className="btn btn-dark">
+                                <button
+                                  onClick={() => increaseQuantity(guitar.id)}
+                                  type="button"
+                                  className="btn btn-dark"
+                                >
                                   +
                                 </button>
                               </td>
                               <td>
                                 <button
+                                  onClick={() => removeFromCart(guitar.id)}
                                   className="btn btn-danger"
                                   type="button"
                                 >
@@ -76,12 +96,12 @@ export default function Header({ cartProps }) {
                       </table>
                       <p className="text-end">
                         Total pagar:{" "}
-                        <span className="fw-bold">${cartTotal()}</span>
+                        <span className="fw-bold">${cartTotal}</span>
                       </p>
                     </>
                   )}
 
-                  <button className="btn btn-dark w-100 mt-3 p-2">
+                  <button onClick={clearCart} className="btn btn-dark w-100 mt-3 p-2">
                     Vaciar Carrito
                   </button>
                 </div>
