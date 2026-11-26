@@ -1,5 +1,5 @@
 export default function Guitar({ guitarProps , addToCart}) {
-  const { id, name, image, description, price } = guitarProps;
+  const { name, image, description, price } = guitarProps;
 
 
 
