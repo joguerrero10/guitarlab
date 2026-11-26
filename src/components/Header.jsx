@@ -1,19 +1,13 @@
-import { useMemo } from "react";
-
 export default function Header({
   cartProps,
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
-  clearCart
+  clearCart,
+  isEmpty,
+  cartTotal
 }) {
-  //state derivado
-  const isEmpty = useMemo(() => cartProps.length === 0, [cartProps]);
-  const cartTotal = useMemo(
-    () =>
-      cartProps.reduce((total, item) => total + item.quantity * item.price, 0),
-    [cartProps],
-  );
+
 
   return (
     <>
