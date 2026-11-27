@@ -1,9 +1,7 @@
-import {useState} from 'react';
-import Header from "./components/Header";
 import Guitar from "./components/Guitar";
-
+import Header from "./components/Header";
 import { useCart } from "./hooks/useCart";
-
+import type { Guitar as TGuitar} from "./types/types";
 function App() {
   const {
     data,
@@ -17,7 +15,7 @@ function App() {
     cartTotal
   } = useCart();
 
-  
+
   return (
     <>
       <Header
@@ -34,7 +32,7 @@ function App() {
         <h2 className="text-center">Nuestra Colección</h2>
 
         <div className="row mt-5">
-          {data.map((guitar) => (
+          {data.map((guitar: TGuitar) => (
             <Guitar
               key={guitar.id}
               guitarProps={guitar}
